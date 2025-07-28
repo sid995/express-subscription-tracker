@@ -29,7 +29,11 @@ export const sendReminders = serve(async (context) => {
         `Reminder for ${daysBefore} days`,
         reminderDate
       );
-      await triggerReminder(context, `Reminder for ${daysBefore} days`);
+      await triggerReminder(
+        context,
+        `Reminder for ${daysBefore} days`,
+        subscription
+      );
     }
   }
 });
@@ -49,8 +53,13 @@ const sleepUntilReminder = async (context, label, date) => {
   console.log(`Woke up from sleep for ${label}`);
 };
 
-const triggerReminder = async (context, label) => {
+const triggerReminder = async (context, label, subscription) => {
   return await context.run(label, () => {
     console.log(`Triggering ${label} reminder`);
+
+    // Here you would implement the logic to send the reminder,
+    // e.g., sending an email or a notification.
+    // For now, we just log it.
+    console.log(`Reminder sent: ${label} for subscription ${subscription._id}`);
   });
 };
